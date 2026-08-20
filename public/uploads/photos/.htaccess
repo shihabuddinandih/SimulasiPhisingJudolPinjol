@@ -1,0 +1,9 @@
+Options -Indexes
+
+# Folder ini hanya untuk menyimpan file gambar hasil upload. Matikan eksekusi
+# PHP di sini sebagai proteksi berlapis -- kalaupun validasi tipe file di
+# api/helpers.php lolos ditembus, file .php yang nyasar ke sini tidak akan
+# pernah dieksekusi oleh server.
+<FilesMatch "\.(php|phtml|php\d|phar)$">
+  Require all denied
+</FilesMatch>

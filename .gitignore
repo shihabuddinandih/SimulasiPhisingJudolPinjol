@@ -1,0 +1,9 @@
+# Kredensial database asli -- jangan pernah ter-commit.
+public/api/config.php
+
+# Foto profil hasil upload user -- tidak perlu ikut di-commit ke repo.
+public/uploads/photos/*
+!public/uploads/photos/.htaccess
+
+.env
+node_modules/

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secret Admirer 💌</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><text y=%2226%22 font-size=%2226%22>💌</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="bg-hearts" aria-hidden="true"></div>
+
+  <nav id="navbar" class="navbar" hidden>
+    <div class="nav-brand">💌 Secret Admirer</div>
+    <div class="nav-links">
+      <button type="button" class="nav-link active" data-view="home">Home</button>
+      <button type="button" class="nav-link" data-view="inbox">Pesan Masuk <span id="inboxBadge" class="badge" hidden></span></button>
+      <button type="button" class="nav-link" data-view="profile">Profil Saya</button>
+    </div>
+    <div class="nav-user">
+      <img id="navAvatar" class="nav-avatar" alt="" />
+      <span id="navName" class="nav-name"></span>
+      <button type="button" id="logoutBtn" class="btn-ghost">Keluar</button>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <!-- ====== AUTH VIEW ====== -->
+    <section id="authView" class="auth-view">
+      <header class="header">
+        <h1>💌 Secret Admirer</h1>
+        <p class="subtitle">Kirim &amp; terima pesan admirer secara diam-diam</p>
+      </header>
+
+      <div class="card auth-card">
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab-btn active" data-tab="login">Masuk</button>
+          <button type="button" class="tab-btn" data-tab="register">Daftar</button>
+        </div>
+
+        <form id="loginForm" class="tab-panel active" novalidate>
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" maxlength="20" autocomplete="username" placeholder="username" required />
+
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" minlength="6" autocomplete="current-password" placeholder="Password" required />
+
+          <button type="submit" class="btn-primary">
+            <span class="btn-text">Masuk</span>
+            <span class="btn-spinner" hidden></span>
+          </button>
+          <p id="loginError" class="error" role="alert" hidden></p>
+        </form>
+
+        <form id="registerForm" class="tab-panel" novalidate>
+          <label for="regUsername">Username</label>
+          <input type="text" id="regUsername" maxlength="20" placeholder="cth: budi_s (huruf kecil, angka, _)" pattern="[a-z0-9_]{3,20}" required />
+
+          <label for="regName">Nama Tampilan</label>
+          <input type="text" id="regName" maxlength="60" placeholder="Nama kamu" required />
+
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" minlength="6" placeholder="Minimal 6 karakter" required />
+
+          <label for="regPhoto" class="file-label">Foto Profil</label>
+          <span class="preview" id="regPreview">
+            <span class="preview-placeholder">📷 Pilih foto</span>
+          </span>
+          <input type="file" id="regPhoto" accept="image/*" required />
+
+          <button type="submit" class="btn-primary">
+            <span class="btn-text">Daftar</span>
+            <span class="btn-spinner" hidden></span>
+          </button>
+          <p id="registerError" class="error" role="alert" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ====== HOME VIEW ====== -->
+    <section id="homeView" class="app-view" hidden>
+      <header class="header">
+        <h1>💘 Home</h1>
+        <p class="subtitle">Temukan orang lain &amp; kirim pesan admirer secara anonim</p>
+      </header>
+      <div id="userGrid" class="user-grid"></div>
+      <p class="empty-state" id="homeEmpty" hidden>Belum ada orang lain yang daftar. Ajak temanmu! 💌</p>
+    </section>
+
+    <!-- ====== INBOX VIEW ====== -->
+    <section id="inboxView" class="app-view" hidden>
+      <header class="header">
+        <h1>💌 Pesan Masuk</h1>
+        <p class="subtitle">Pesan admirer untukmu — identitas pengirim dirahasiakan</p>
+      </header>
+      <div id="messageList" class="message-list"></div>
+      <p class="empty-state" id="inboxEmpty" hidden>Belum ada pesan masuk. Sabar ya~ 😊</p>
+    </section>
+
+    <!-- ====== PROFILE VIEW ====== -->
+    <section id="profileView" class="app-view" hidden>
+      <header class="header">
+        <h1>👤 Profil Saya</h1>
+        <p class="subtitle">Foto &amp; nama ini yang dilihat orang lain di Home</p>
+      </header>
+      <form id="profileForm" class="card" novalidate>
+        <label for="profilePhoto" class="file-label">Foto Profil</label>
+        <span class="preview" id="profilePreview">
+          <span class="preview-placeholder">📷 Pilih foto</span>
+        </span>
+        <input type="file" id="profilePhoto" accept="image/*" />
+
+        <label for="profileName">Nama Tampilan</label>
+        <input type="text" id="profileName" maxlength="60" required />
+
+        <label for="profileBio">Bio singkat (opsional)</label>
+        <textarea id="profileBio" maxlength="200" rows="3" placeholder="Ceritakan sedikit tentang dirimu..."></textarea>
+
+        <p class="hint">Username: <strong id="profileUsername"></strong> (tidak bisa diubah)</p>
+
+        <button type="submit" class="btn-primary">
+          <span class="btn-text">Simpan</span>
+          <span class="btn-spinner" hidden></span>
+        </button>
+        <p id="profileError" class="error" role="alert" hidden></p>
+        <p id="profileSuccess" class="success" role="status" hidden></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- ====== MODAL: KIRIM PESAN ====== -->
+  <div id="messageModal" class="modal-overlay" hidden>
+    <div class="modal card">
+      <button type="button" class="modal-close" id="modalClose" aria-label="Tutup">✕</button>
+      <h2>Kirim Pesan Admirer ke <span id="modalTargetName"></span></h2>
+      <form id="sendMessageForm" novalidate>
+        <textarea id="messageText" maxlength="500" rows="4" placeholder="Tulis pesanmu secara anonim..." required></textarea>
+        <p class="char-count"><span id="charCount">0</span>/500</p>
+        <button type="submit" class="btn-primary">
+          <span class="btn-text">Kirim Diam-diam 🤫</span>
+          <span class="btn-spinner" hidden></span>
+        </button>
+        <p id="modalError" class="error" role="alert" hidden></p>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Dibuat untuk simulasi KKN • Pesan bersifat anonim bagi penerima</p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
